@@ -325,6 +325,14 @@ canvas.addEventListener('touchstart', (e) => {
   handleTap();
 });
 
+// Added spacebar support here:
+window.addEventListener('keydown', (e) => {
+  if (e.code === 'Space') {
+    e.preventDefault();
+    handleTap();
+  }
+});
+
 function drawCircle() {
   ctx.beginPath();
   ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
@@ -394,4 +402,3 @@ function gameLoop() {
 </script>
 </body>
 </html>
-
