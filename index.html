@@ -2,179 +2,123 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Circle Tap Game</title>
 <style>
-  body {
-    margin: 0;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-family: 'Arial', sans-serif;
-    color: white;
-    position: relative;
-  }
-
-  #bgGradient {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 150vw;
-    height: 150vh;
-    background: linear-gradient(270deg,
-      #2c5364,
-      #4a6572,
-      #7a8c99,
-      #a0a8b8,
-      #90b09e,
-      #a7c8b8,
-      #748cab,
-      #2e4a62
-    );
-    background-size: 1600% 1600%;
-    animation: gradientShift 60s ease infinite;
-    filter: blur(80px);
-    z-index: -1;
-  }
-
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  canvas {
-    background: transparent;
-    display: block;
-    position: relative;
-    z-index: 1;
-  }
-
-  #score {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2rem;
-    font-weight: bold;
-    color: #ffea00;
-    text-shadow: 0 0 8px #ffea00, 0 0 15px #ffea00;
-    pointer-events: none;
-    user-select: none;
-    z-index: 2;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-  }
-
-  #livesContainer {
-    position: absolute;
-    top: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-    z-index: 3;
-  }
-
-  .heart {
-    font-size: 2rem;
-    color: #ffea00;
-    user-select: none;
-    opacity: 1;
-    transition: opacity 0.5s ease;
-  }
-
-  .heart.lost {
-    opacity: 0;
-  }
-
-  #gameOver {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: white;
-    font-size: 3rem;
-    display: none;
-    z-index: 4;
-  }
-
-  #restartBtn {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 1.5rem;
-    background: #ffea00;
-    color: #111;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 0 0 15px #ffea00;
-    display: inline-block;
-    transition: opacity 0.5s ease, transform 0.3s ease;
-  }
-
-  #startGameBtn {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px 40px;
-    font-size: 2rem;
-    color: #111;
-    background: #ffea00;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    box-shadow: 0 0 25px #ffea00;
-    z-index: 5;
-  }
-
-  #countdownOverlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.5);
-    font-size: 4rem;
-    color: #fff;
-    font-weight: bold;
-    text-shadow: 0 0 20px #000;
-    opacity: 0;
-    z-index: 6;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-
-  #countdownOverlay.show {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.3);
-  }
-
-  #bestScoreDisplay {
-    margin-top: 20px;
-    font-size: 2rem;
-    color: #ffea00;
-    text-shadow: 0 0 8px #ffea00;
-  }
+    body {
+        margin: 0;
+        background: linear-gradient(135deg, #2c5364, #203a43, #0f2027);
+        background-size: 400% 400%;
+        animation: gradientBG 20s ease infinite;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+        font-family: 'Arial', sans-serif;
+        color: white;
+        user-select: none;
+    }
+    @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    canvas {
+        background: transparent;
+        display: block;
+    }
+    #score {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 2rem;
+        font-weight: bold;
+        color: #ffea00;
+        text-shadow: 0 0 10px #ffea00, 0 0 20px #ffea00;
+        pointer-events: none;
+        user-select: none;
+    }
+    #lives {
+        position: absolute;
+        top: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+        font-size: 1.5rem;
+        color: #ffea00;
+        user-select: none;
+    }
+    #startBtn, #restartBtn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 15px 30px;
+        font-size: 1.5rem;
+        background: #ffea00;
+        color: #111;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 0 15px #ffea00;
+        user-select: none;
+    }
+    #countdownOverlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 4rem;
+        font-weight: bold;
+        color: #ffea00;
+        text-shadow: 0 0 15px #ffea00, 0 0 30px #ffea00;
+        user-select: none;
+        pointer-events: none;
+        display: none;
+    }
+    #gameOver {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white;
+        font-size: 2.5rem;
+        display: none;
+        user-select: none;
+    }
 </style>
 </head>
 <body>
-  <div id="bgGradient"></div>
-  <div id="score">SCORE: 1</div>
-  <div id="livesContainer"></div>
-  <div id="countdownOverlay"></div>
-  <div id="gameOver">
-      GAME OVER<br>
-      <div id="bestScoreDisplay"></div>
-      <button id="restartBtn">Restart</button>
-  </div>
-  <button id="startGameBtn">Start Game</button>
-  <canvas id="gameCanvas"></canvas>
+<div id="lives"></div>
+<div id="score"></div>
+
+<button id="startBtn">Start Game</button>
+
+<div id="countdownOverlay"></div>
+
+<div id="gameOver">
+    Game Over<br>
+    <div id="bestScoreDisplay"></div>
+    <button id="restartBtn">Restart</button>
+</div>
+
+<canvas id="gameCanvas"></canvas>
 
 <script>
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
+const scoreDisplay = document.getElementById('score');
+const livesDisplay = document.getElementById('lives');
+const startBtn = document.getElementById('startBtn');
+const restartBtn = document.getElementById('restartBtn');
+const countdownOverlay = document.getElementById('countdownOverlay');
+const gameOverScreen = document.getElementById('gameOver');
+const bestScoreDisplay = document.getElementById('bestScoreDisplay');
+
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
@@ -183,214 +127,242 @@ const centerY = canvas.height / 2;
 const radius = 140;
 const ringThickness = 40;
 
-const scoreDisplay = document.getElementById('score');
-const livesContainer = document.getElementById('livesContainer');
-const startBtn = document.getElementById('startGameBtn');
-const restartBtn = document.getElementById('restartBtn');
-const countdownOverlay = document.getElementById('countdownOverlay');
-const gameOverScreen = document.getElementById('gameOver');
-const bestScoreDisplay = document.getElementById('bestScoreDisplay');
-
 let dotAngle = 0;
-const speedMin = 2 * Math.PI / 240;
-const speedMax = 2 * Math.PI / 90;
-let speed = speedMin;
+let speed = 0.0157; // approx 4 seconds per circle (2pi / speed)
+const minSpeed = 0.0157; // 4 seconds full circle
+const maxSpeed = 0.0419; // 1.5 seconds full circle
+const speedIncrement = 0.0025;
+
 let direction = 1;
-let score = 1;
-let bestScore = parseInt(localStorage.getItem('bestScore')) || 1;
+let score = 0;
+let lives = 10;
+let isPaused = false;
+let showRedX = false;
+let poofFrames = 0;
 let zoneStart = Math.random() * Math.PI * 2;
 let zoneSize = getRandomZoneSize();
-let isPaused = true;
-let showRedX = false;
-let pulseEffects = [];
-let lives = 10;
+
+let gameRunning = false;
 
 function getRandomZoneSize() {
     return Math.PI / 10 + Math.random() * (Math.PI / 4);
 }
 
-function createLivesUI() {
-  livesContainer.innerHTML = '';
-  for (let i = 0; i < 10; i++) {
-    const heart = document.createElement('div');
-    heart.classList.add('heart');
-    heart.innerHTML = '💛';
-    livesContainer.appendChild(heart);
-  }
-}
-
-function loseLife() {
-  if (lives <= 0) return;
-  const hearts = livesContainer.querySelectorAll('.heart');
-  hearts[lives - 1].classList.add('lost');
-  lives--;
-}
-
-function resetLives() {
-  lives = 10;
-  createLivesUI();
-}
-
-function showCountdown(callback) {
-  const steps = ['3', '2', '1', 'GO!'];
-  let index = 0;
-
-  function nextStep() {
-    if (index >= steps.length) {
-      countdownOverlay.style.opacity = 0;
-      scoreDisplay.style.opacity = 1;
-      livesContainer.style.opacity = 1;
-      isPaused = false;
-      if (callback) callback();
-      return;
-    }
-    countdownOverlay.textContent = steps[index];
-    countdownOverlay.classList.add('show');
-    setTimeout(() => {
-      countdownOverlay.classList.remove('show');
-      index++;
-      setTimeout(nextStep, 400);
-    }, 600);
-  }
-  nextStep();
-}
-
-function startGame() {
-  gameOverScreen.style.display = "none";
-  startBtn.style.display = "none";
-  restartBtn.style.display = "none";
-
-  resetLives();
-  scoreDisplay.style.opacity = 0;
-  livesContainer.style.opacity = 0;
-  isPaused = true;
-  showCountdown(() => {
-    gameLoop();
-  });
-}
-
-startBtn.addEventListener('click', startGame);
-restartBtn.addEventListener('click', () => location.reload());
-
 function updateScore() {
-  scoreDisplay.textContent = `SCORE: ${score}`;
-  if (score > bestScore) {
-    bestScore = score;
-    localStorage.setItem('bestScore', bestScore);
-  }
+    scoreDisplay.textContent = `SCORE: ${score}`;
+}
+
+function updateLives() {
+    livesDisplay.innerHTML = '';
+    for(let i = 0; i < lives; i++) {
+        const heart = document.createElement('span');
+        heart.textContent = '♥';
+        heart.style.color = '#ffea00';
+        livesDisplay.appendChild(heart);
+    }
 }
 
 function isInZone(angle) {
-  let normDot = ((angle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
-  let normZone = ((zoneStart % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
-  let diff = (normDot - normZone + Math.PI * 2) % (Math.PI * 2);
-  return diff <= zoneSize;
+    let normDot = ((angle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+    let normZone = ((zoneStart % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+    let diff = (normDot - normZone + Math.PI * 2) % (Math.PI * 2);
+    return diff <= zoneSize;
+}
+
+function resetGameVars() {
+    score = 0;
+    lives = 10;
+    speed = minSpeed;
+    direction = 1;
+    isPaused = false;
+    showRedX = false;
+    poofFrames = 0;
+    zoneStart = Math.random() * Math.PI * 2;
+    zoneSize = getRandomZoneSize();
+    dotAngle = 0;
+    updateScore();
+    updateLives();
+    gameOverScreen.style.display = 'none';
+    countdownOverlay.style.display = 'none';
+    scoreDisplay.style.display = 'none';
+    livesDisplay.style.display = 'none';
+    canvas.style.display = 'none';
+}
+
+function showGameElements() {
+    scoreDisplay.style.display = 'block';
+    livesDisplay.style.display = 'flex';
+    canvas.style.display = 'block';
+    gameOverScreen.style.display = 'none';
+    startBtn.style.display = 'none';
 }
 
 function handleTap() {
-  if (isPaused) return;
-  if (isInZone(dotAngle)) {
-    direction *= -1;
-    speed = Math.min(speedMax, speed + 0.0035);
-    score += 1;
-    updateScore();
-    zoneStart = Math.random() * Math.PI * 2;
-    zoneSize = getRandomZoneSize();
-    pulseEffects.push({radius: radius + ringThickness / 2, opacity: 0.5});
-  } else {
-    loseLife();
-    direction *= -1;
-    isPaused = true;
-    showRedX = true;
-    setTimeout(() => {
-      showRedX = false;
-      if (lives <= 0) {
-        gameOverScreen.style.display = "block";
-        bestScoreDisplay.textContent = `BEST SCORE: ${bestScore}`;
-        scoreDisplay.style.display = "none";
-        canvas.style.display = "none";
-        countdownOverlay.style.display = "none";
-        livesContainer.style.opacity = 0;
-        restartBtn.style.display = "inline-block";
-      } else {
-        isPaused = false;
-      }
-    }, 1000);
-  }
-}
-
-canvas.addEventListener('mousedown', handleTap);
-canvas.addEventListener('touchstart', (e) => {
-  e.preventDefault();
-  handleTap();
-});
-
-function drawCircle() {
-  ctx.beginPath();
-  ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-  ctx.strokeStyle = '#333';
-  ctx.lineWidth = ringThickness;
-  ctx.shadowColor = 'rgba(0,0,0,1)';
-  ctx.shadowBlur = 25;
-  ctx.stroke();
-  ctx.shadowBlur = 0;
-}
-
-function drawZone() {
-  ctx.beginPath();
-  ctx.lineCap = 'round';
-  ctx.arc(centerX, centerY, radius, zoneStart, zoneStart + zoneSize);
-  ctx.strokeStyle = 'yellow';
-  ctx.lineWidth = ringThickness;
-  ctx.stroke();
-}
-
-function drawDot() {
-  const x = centerX + radius * Math.cos(dotAngle);
-  const y = centerY + radius * Math.sin(dotAngle);
-  ctx.beginPath();
-  ctx.arc(x, y, ringThickness / 2, 0, Math.PI * 2);
-  ctx.fillStyle = '#fff';
-  ctx.shadowColor = '#fff';
-  ctx.shadowBlur = 30;
-  ctx.fill();
-  ctx.shadowBlur = 0;
-
-  if (showRedX) {
-    ctx.fillStyle = 'red';
-    ctx.font = "bold 30px Arial";
-    ctx.fillText("X", x - 10, y - 20);
-  }
-}
-
-function drawPulse() {
-  for (let i = 0; i < pulseEffects.length; i++) {
-    let p = pulseEffects[i];
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, p.radius, 0, Math.PI * 2);
-    ctx.strokeStyle = `rgba(255, 234, 0, ${p.opacity})`;
-    ctx.lineWidth = 15;
-    ctx.stroke();
-    p.radius += 8;
-    p.opacity -= 0.05;
-    if (p.opacity <= 0) {
-      pulseEffects.splice(i, 1);
-      i--;
+    if (isPaused || !gameRunning) return;
+    if (isInZone(dotAngle)) {
+        direction *= -1;
+        speed = Math.min(maxSpeed, speed + speedIncrement);
+        score++;
+        updateScore();
+        poofFrames = 15;
+        zoneStart = Math.random() * Math.PI * 2;
+        zoneSize = getRandomZoneSize();
+    } else {
+        if (isPaused) return;
+        lives--;
+        updateLives();
+        showRedX = true;
+        isPaused = true;
+        setTimeout(() => {
+            direction *= -1;
+            isPaused = false;
+            showRedX = false;
+            if (lives <= 0) {
+                endGame();
+            }
+        }, 1000);
     }
-  }
+}
+
+function endGame() {
+    gameRunning = false;
+    gameOverScreen.style.display = 'block';
+    scoreDisplay.style.display = 'none';
+    livesDisplay.style.display = 'none';
+    canvas.style.display = 'none';
+
+    const bestScore = Math.max(score, parseInt(localStorage.getItem('bestScore') || '0'));
+    localStorage.setItem('bestScore', bestScore);
+    bestScoreDisplay.textContent = `Best Score: ${bestScore}`;
+
+    startBtn.style.display = 'none';
+}
+
+function startCountdown(callback) {
+    countdownOverlay.style.display = 'block';
+    let count = 3;
+    countdownOverlay.textContent = count;
+    const interval = setInterval(() => {
+        count--;
+        if (count > 0) {
+            countdownOverlay.textContent = count;
+        } else {
+            countdownOverlay.textContent = 'GO!';
+            setTimeout(() => {
+                countdownOverlay.style.display = 'none';
+                callback();
+            }, 800);
+            clearInterval(interval);
+        }
+    }, 1000);
+}
+
+function startGame() {
+    resetGameVars();
+    startCountdown(() => {
+        showGameElements();
+        gameRunning = true;
+        gameLoop();
+    });
 }
 
 function gameLoop() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawCircle();
-  drawZone();
-  drawPulse();
-  drawDot();
-  if (!isPaused) {
-    dotAngle += speed * direction;
-  }
-  requestAnimationFrame(gameLoop);
+    if (!gameRunning) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawCircle();
+    if (poofFrames > 0) {
+        ctx.globalAlpha = poofFrames / 15 * 0.3; // slightly transparent yellow pulse
+        drawPulse();
+        ctx.globalAlpha = 1;
+        poofFrames--;
+    } else {
+        drawZone();
+    }
+    drawDot();
+
+    if (!isPaused) {
+        dotAngle += speed * direction;
+    }
+
+    requestAnimationFrame(gameLoop);
 }
+
+function drawCircle() {
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+    ctx.strokeStyle = '#333a43'; // darker gray
+    ctx.lineWidth = ringThickness;
+    ctx.shadowColor = 'rgba(0,0,0,0.8)';
+    ctx.shadowBlur = 30;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+}
+
+function drawZone() {
+    ctx.beginPath();
+    ctx.lineCap = 'round';
+    ctx.arc(centerX, centerY, radius, zoneStart, zoneStart + zoneSize);
+    ctx.strokeStyle = 'yellow';
+    ctx.lineWidth = ringThickness;
+    ctx.stroke();
+}
+
+function drawPulse() {
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius + ringThickness / 2 + 10, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(255, 235, 0, 0.15)';
+    ctx.lineWidth = 30;
+    ctx.stroke();
+}
+
+function drawDot() {
+    const x = centerX + radius * Math.cos(dotAngle);
+    const y = centerY + radius * Math.sin(dotAngle);
+    ctx.beginPath();
+    ctx.arc(x, y, ringThickness / 2, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff';
+    ctx.shadowColor = '#fff';
+    ctx.shadowBlur = 30;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    if (showRedX) {
+        ctx.fillStyle = 'red';
+        ctx.font = "bold 30px Arial";
+        ctx.fillText("X", x - 10, y - 20);
+    }
+}
+
+// Event listeners
+canvas.addEventListener('mousedown', handleTap);
+canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    handleTap();
+});
+window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') {
+        e.preventDefault();
+        handleTap();
+    }
+});
+
+startBtn.addEventListener('click', () => {
+    startBtn.style.display = 'none';
+    startGame();
+});
+
+restartBtn.addEventListener('click', () => {
+    gameOverScreen.style.display = 'none';
+    startGame();
+});
+
+// Handle window resize
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
 </script>
 </body>
 </html>
